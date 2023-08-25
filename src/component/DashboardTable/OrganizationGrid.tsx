@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Title from "./Title";
-
 import axios from "axios";
 
 interface RowData {
