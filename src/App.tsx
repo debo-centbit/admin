@@ -1,31 +1,43 @@
 import "./App.css";
 import NavBar from "./components/NavBar";
-import { Box, ThemeProvider, CssBaseline } from "@mui/material";
+import { Box, ThemeProvider, CssBaseline, Paper, createTheme } from "@mui/material";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import theme from "./config/theme";
 import SideBar from "./components/SideBar";
+import {useState}from "react"
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
+
+
 function App() {
+  const [darkMode, setDarkMode] = useState(false)
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark": "light",
+    },
+  });
+  
   return (
     <>
       <ThemeProvider theme={theme}>
+        <Paper>
         <ProSidebarProvider>
           <CssBaseline />
-          <NavBar />
+          <NavBar check={darkMode} change={() => setDarkMode(!darkMode)} children={""} />
           <Box sx={styles.container}>
             <BrowserRouter>
-              <SideBar />
+              <SideBar  />
               <Box component={"main"} sx={styles.mainSection}>
                 <AppRoutes />
               </Box>
             </BrowserRouter>
           </Box>
         </ProSidebarProvider>
+
+        </Paper>
       </ThemeProvider>
     </>
   );

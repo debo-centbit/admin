@@ -1,17 +1,24 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Switch } from "@mui/material";
 import { useProSidebar } from "react-pro-sidebar";
 
-export default function NavBar() {
+type NavBarProps = {
+  check: boolean;
+  change: () => void;
+  children: string; 
+};
+export default function NavBar({check,change, children}: NavBarProps) {
+
   const { collapseSidebar, toggleSidebar, broken} = useProSidebar();
+  const label = { inputProps: { 'aria-label': 'Size switch demo' } };
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -26,19 +33,12 @@ export default function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            LOGO
-          </Typography>{" "}
+          
           <Box sx={{ flexGrow: 1 }} />
           <Box
             sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
           >
-            <Switch />
+            <Switch {...label} defaultChecked  onChange={change} checked={check}/>
             <IconButton
               size="large"
               edge="end"
@@ -48,7 +48,7 @@ export default function NavBar() {
             >
               <AccountCircle />
             </IconButton>
-            <p>UserName</p>
+            <p>{children}</p>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -65,3 +65,4 @@ export default function NavBar() {
     </Box>
   );
 }
+

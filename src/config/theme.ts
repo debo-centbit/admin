@@ -47,7 +47,7 @@ theme = createTheme(theme, {
       fontSize: "0.8rem"
     },
     h8:{
-      fontsize: "0.7"
+      fontsize: "0.7rem"
     }
   },
 });
