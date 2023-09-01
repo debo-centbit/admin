@@ -1,17 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,createContext} from "react";
 import Box from "@mui/material/Box";
 import FormControl from '@mui/material/FormControl';
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-
-
 
 
 
@@ -92,12 +88,12 @@ type radioGroup = {
 
 
 export const BasicModal: React.FC<ModalProps> = ({ children }) => {
-	
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
 	return (
+	
 		<div>
 			<ContainedButton onClick={handleOpen} value="Add" className="" />
 			<Modal
@@ -106,8 +102,10 @@ export const BasicModal: React.FC<ModalProps> = ({ children }) => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description">
 				<Box sx={style}>
-					<h4>Add Organization</h4>
-				
+					<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+						<h4 style={{ margin: "0" }}>Add Organization</h4>
+						
+					</div>
 					<div>{children}</div>
 				</Box>
 			</Modal>
@@ -169,31 +167,6 @@ export const InputField = (props: inputProps) => {
 		</Box>
 	);
 };
-
-export const Toggle: React.FC<toggleButton> = ({tagline, banner}) => {
-	const [alignment, setAlignment] = useState(tagline);
-
-	const handleChange = (
-		event: React.MouseEvent<HTMLElement>,
-		newAlignment: string | any,
-	) => {
-		setAlignment(newAlignment);
-	};
-
-	return (
-		<ToggleButtonGroup
-			color="primary"
-			value={alignment}
-			exclusive
-			onChange={handleChange}
-			aria-label="Platform">
-			<ToggleButton value={tagline}>{tagline}</ToggleButton>
-			{/* <label htmlFor="file"><div value={banner}>{banner}</div></label> */}
-			{/* <input type="file" style={{display:"none"}} id="file" name="files" /> */}
-			
-		</ToggleButtonGroup>
-	);
-}
 
 
 export const  RowRadioButtonsGroup = (props: radioGroup) => {

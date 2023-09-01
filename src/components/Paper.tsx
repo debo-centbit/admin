@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, createContext  } from "react";
 import { InputField, RowRadioButtonsGroup } from "./materials/Material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import  Switch  from "react-switch";
+import './Paper.css';
+
 
 
 interface InputProps {
@@ -19,7 +22,14 @@ interface InputProps {
   authentication: string;
 }
 
+type ThemeContextType = "light" | "dark";
+type ThemeContextProps = { theme: ThemeContextType; toggleTheme: () => void; }
+
+const ThemeContext = createContext<ThemeContextType | ThemeContextProps>("light");
+
+
 const Paper = () => {
+    const [theme, setTheme] = useState<ThemeContextType>("dark");
   const [user, setUser] = useState<InputProps>({
     organizationName: "",
     banner:File,
@@ -35,6 +45,9 @@ const Paper = () => {
     authentication: "",
   });
 
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === "light" ? "dark" : "light"));
+  };
   const [banner, setBanner] = useState<File | null>(null);
 
   const [error, setErrors] = useState<any>({});
@@ -180,17 +193,9 @@ const Paper = () => {
   };
 
   return (
-   
-     <div>
-        <form data-test="organization-form" onSubmit={handleSubmit} style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: "5px",
-            flexWrap: "wrap",
-            maxWidth: "98%",
-        }}>
+   <ThemeContext.Provider value={{theme, toggleTheme}}>
+     <div className="paper" id={theme}>
+        <form data-test="organization-form" onSubmit={handleSubmit} className="Paper-form">
         <div>
             <InputField
                 data-test="organization-name"
@@ -204,7 +209,7 @@ const Paper = () => {
                 disabled={false}
             />   
                 {error.organizationName && (
-                    <span style={{ color: 'red', fontSize: '12px', marginTop: '4px'}}>
+                    <span className="Paper-span">
                     {error.organizationName}
                     </span>
                 )}
@@ -223,7 +228,7 @@ const Paper = () => {
                 disabled={false}
             />
                  {error.organizationUrl && (
-                    <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                    <span className="Paper-span">
                     {error.organizationUrl}
                     </span>
                 )}
@@ -242,30 +247,13 @@ const Paper = () => {
             />
 
                 {error.buttonColor && (
-                        <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                        <span className="Paper-span">
                         {error.buttonColor}
                         </span>
                 )}
         </div>            
         
-        <div>
-        <InputField
-            type="text"
-            label="Tagline"
-            placeholder="Tagline"
-            value={user.tagline}
-            onChange={handleChange}
-            name="tagline"
-             required={true}
-             disabled={false}
-        />
-
-                {error.tagline && (
-                        <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
-                        {error.tagline}
-                        </span>
-                )}
-        </div>   
+       
         
     
         <div>
@@ -280,7 +268,7 @@ const Paper = () => {
                 disabled={false}
             />
                 {error.taglinePosition && (
-                            <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                            <span className="Paper-span">
                             {error.taglinePosition}
                             </span>
                 )}
@@ -298,7 +286,7 @@ const Paper = () => {
                 disabled={false}
             />
             {error.organizationPosition && (
-              <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+              <span className="Paper-span">
                  {error.organizationPosition}
              </span>
             )}
@@ -317,7 +305,7 @@ const Paper = () => {
                 disabled={false}
             />
             {error.registerationPageForm && (
-                <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                <span className="Paper-span">
                     {error.registerationPageForm}
                 </span>
             )}
@@ -334,7 +322,7 @@ const Paper = () => {
                 disabled={false}
             />
             {error.registrationLogoPosition && (
-                <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                <span className="Paper-span">
                     {error.registrationLogoPosition}
                 </span>
             )}
@@ -352,7 +340,7 @@ const Paper = () => {
                 disabled={false}
             />
                 {error.registrationPageLogo && (
-                        <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                        <span className="Paper-span">
                             {error.registrationPageLogo}
                         </span>
                 )}
@@ -370,41 +358,12 @@ const Paper = () => {
               disabled={false}
         />
           {error.registrationPageTagline && (
-                        <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+                        <span className="Paper-span">
                             {error.registrationPageTagline}
                         </span>
          )}
         </div>
-          
-       <div style={{
-        display:"flex",
-        width:"100%",
-        justifyContent:"space-between"
-       }}>
-      <label  htmlFor="bannerUpload" style={{ width:"43%",background:"grey",padding:"10px",margin:"5px", color: "white",}}>
-        Upload Banner
-      </label>
-        <input type="file" id="bannerUpload" accept="image" onChange={handleImage} style={{display:"none"}}  name="banner" />
-  
-     
-        <div>
-            <InputField
-                type="text"
-                label="Tagline position"
-                placeholder="Tagline"
-                value={user.taglinePosition}
-                onChange={handleChange}
-                name="taglinePosition"
-                required={true}
-                disabled={false}
-            />
-                {error.taglinePosition && (
-                            <span style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
-                            {error.taglinePosition}
-                            </span>
-                )}
-        </div> </div>
-       
+
         <div>
             <RowRadioButtonsGroup 
                 label="authentication"
@@ -413,14 +372,50 @@ const Paper = () => {
                 name="authentication"
             />  
         </div>
+          
+    <div className="Paper-toogle">
+      <label  htmlFor="bannerUpload" className="Paper-upload-label">
+        <span style={{ color: "white", padding: "10px"}}>Upload Banner</span>
+      </label>
+        <input type="file" id="bannerUpload" accept="image" onChange={handleImage} style={{display:"none"}}  name="banner" />
+        
+
+        <div className="Paper-tagline">
+            <InputField
+                type="text"
+                label="Tagline"
+                placeholder="Tagline"
+                value={user.tagline}
+                onChange={handleChange}
+                name="tagline"
+                required={true}
+                disabled={false}
+            />
+
+                    {error.tagline && (
+                            <span  className="Paper-span">
+                            {error.tagline}
+                            </span>
+                    )}
+        </div>  
+     
+     </div>
+
+       
 
     
 
-       <button data-test="organization-url" type="submit" style={{ width: "98%", backgroundColor: "blue", padding: "10px", color: "white", alignItems: "center", border: "none", margin: "5px" }}>Submit</button>
+       <button data-test="organization-url" type="submit" className="Paper-submit">Add Organization</button>
         <ToastContainer style={{color: "red"}}/>
 
         </form>
     </div>  
+    <div style={{display: "flex", gap: "10px"}}>
+          <label> {theme === "light" ? "Light Mode" : "Dark Mode"}</label>
+          <Switch onChange={toggleTheme} checked={theme === "dark"} />
+    </div>
+   
+</ThemeContext.Provider>
 );
 };
 
