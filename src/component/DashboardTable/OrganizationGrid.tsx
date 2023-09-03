@@ -18,32 +18,11 @@ import {
 	Typography,
 	styled,
 } from "@mui/material";
+import customColors from "./CustomColors"
 import React, { useEffect, useState } from "react";
 import Title from "./Title";
-import axios from "axios";
-
-interface RowData {
-	id: number;
-	name: string;
-	tagline: string;
-	banner: string;
-	organizationURL: string;
-	borderRadius: string;
-	buttonColors: string;
-	authMethod: string;
-	[key: string]: string | number;
-}
-
-interface Organization {
-	id: number;
-	name: string;
-	tagline: string;
-	banner: string;
-	organizationURL: string;
-	borderRadius: string;
-	buttonColors: string;
-	authMethod: string;
-}
+import { RowData, Organization } from './interfaces/interfaces'
+import { labels } from '../../en'
 
 const StyledToolbar = styled(Toolbar)({
 	display: "flex",
@@ -57,7 +36,7 @@ const StyledPagination = styled(Box)({
 });
 
 const Search = styled("div")(({ theme }) => ({
-	backgroundColor: "#fff",
+	backgroundColor: theme.palette.common.white,
 	padding: "5px 15px",
 	borderRadius: theme.shape.borderRadius,
 	minWidth: "30%",
@@ -74,6 +53,8 @@ const StyledModal = styled(Modal)({
 	justifyContent: "center",
 	alignItems: "center",
 });
+
+
 
 function createData(
 	id: number,
@@ -97,19 +78,20 @@ function createData(
 	};
 }
 
-export default function TableGrid() {
+export default function OrganizationGrid() {
 	const [rows, setRows] = useState<RowData[]>([]);
 	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [page, setPage] = useState<number>(1);
 	const [open, setOpen] = useState(false);
 	const [selectedRow, setSelectedRow] = useState<RowData | null>(null);
 	const [editRowIndex, setEditRowIndex] = useState<number | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchOrganizationData = async () => {
 			try {
-				const response = await axios.get("http://localhost:3000/organizations");
-				const organizationData: Organization[] = response.data;
+				const response = await fetch("http://localhost:3000/organizations");
+				const organizationData: Organization[] = await response.json();
 				const initialRows: RowData[] = organizationData.map((organization) =>
 					createData(
 						organization.id,
@@ -125,6 +107,7 @@ export default function TableGrid() {
 				setRows(initialRows);
 			} catch (error) {
 				console.error("Error fetching organization data:", error);
+				setError("Error fetching organization data");
 			}
 		};
 
@@ -133,9 +116,10 @@ export default function TableGrid() {
 
 	const itemsPerPage = 5;
 
-	const filteredRows = rows.filter((row) =>
-		row.name.toLowerCase().includes(searchQuery.toLowerCase())
-	);
+	const filteredRows: RowData[] = rows.filter((row) =>
+	row.name && row.name.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
 
 	const startIndex = (page - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
@@ -155,7 +139,9 @@ export default function TableGrid() {
 
 	const handleRemoveOrg = async (id: number) => {
 		try {
-			await axios.delete(`http://localhost:3000/organizations/${id}`);
+			await fetch(`http://localhost:3000/organizations/${id}`, {
+				method: "DELETE",
+			});
 			const updatedRows = rows.filter((row) => row.id !== id);
 			setRows(updatedRows);
 		} catch (error) {
@@ -166,12 +152,12 @@ export default function TableGrid() {
 	return (
 		<React.Fragment>
 			<StyledToolbar>
-				<Title>Organizations</Title>
+				<Title> {labels.title}</Title>
 				<Search>
 					<IconButton
 						aria-label="search"
 						sx={{
-							color: "#212121",
+							color: customColors.ashGray,
 						}}
 					>
 						<SearchIcon />
@@ -182,7 +168,7 @@ export default function TableGrid() {
 						onChange={handleSearch}
 						sx={{
 							width: "90%",
-							color: "#000",
+							color: customColors.newBlack,
 						}}
 					/>
 				</Search>
@@ -191,21 +177,29 @@ export default function TableGrid() {
 			<Table size="small">
 				<TableHead>
 					<TableRow>
-						<TableCell>Name</TableCell>
-						<TableCell>Tagline</TableCell>
-						<TableCell>Banner</TableCell>
-						<TableCell>Organization URL</TableCell>
-						<TableCell>Border Radius</TableCell>
-						<TableCell>Button Colors</TableCell>
-						<TableCell>Authentication Method</TableCell>
-						<TableCell align="center">Actions</TableCell>
+					<TableCell>{labels.name}</TableCell>
+          <TableCell>{labels.tagline}</TableCell>
+          <TableCell>{labels.banner}</TableCell>
+          <TableCell>{labels.orgURL}</TableCell>
+          <TableCell>{labels.borderRadius}</TableCell>
+          <TableCell>{labels.buttonColors}</TableCell>
+          <TableCell>{labels.authMethod}</TableCell>
+          <TableCell align="center">{labels.actions}</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{paginatedRows.length === 0 ? (
+					{error ? (
 						<TableRow>
 							<TableCell colSpan={8}>
-								<Typography variant="body1">Organization not found.</Typography>
+								<Typography variant="body1" color="error">
+									{error}
+								</Typography>
+							</TableCell>
+						</TableRow>
+					) : paginatedRows.length === 0 ? (
+						<TableRow>
+							<TableCell colSpan={8}>
+								<Typography variant="body1"> {labels.orgNotFound}</Typography>
 							</TableCell>
 						</TableRow>
 					) : (
@@ -219,15 +213,12 @@ export default function TableGrid() {
 								<TableCell>{row.buttonColors}</TableCell>
 								<TableCell>{row.authMethod}</TableCell>
 								<TableCell align="center">
-									<ButtonGroup variant="text" aria-label="text button group">
-										<Button>
-											<IconButton
+									<ButtonGroup variant="text" aria-label="text button group" disableRipple>
+										<Button
 												aria-label={`edit-${row.id}`}
-												title="Edit"
+												title={labels.edit}
 												sx={{
-													"&:hover": {
-														backgroundColor: "transparent",
-													},
+													color: customColors.darkGray
 												}}
 												onClick={() => {
 													setSelectedRow(row);
@@ -236,21 +227,16 @@ export default function TableGrid() {
 												}}
 											>
 												<Edit />
-											</IconButton>
 										</Button>
-										<Button>
-											<IconButton
+										<Button
 												aria-label={`delete-${row.id}`}
-												title="Delete"
+												title={labels.delete}
 												onClick={() => handleRemoveOrg(row.id)}
 												sx={{
-													"&:hover": {
-														backgroundColor: "transparent",
-													},
+													color: customColors.darkGray
 												}}
 											>
 												<Delete />
-											</IconButton>
 										</Button>
 									</ButtonGroup>
 								</TableCell>
@@ -266,6 +252,7 @@ export default function TableGrid() {
 					variant="outlined"
 					page={page}
 					onChange={handlePageChange}
+					role="pagination"
 				/>
 			</StyledPagination>
 
@@ -301,7 +288,7 @@ export default function TableGrid() {
 						}}
 					>
 						<Typography variant="h6" color="gray" textAlign="center">
-							Edit Organization
+						{labels.editOrganization}
 						</Typography>
 						<IconButton
 							aria-label="close"
@@ -317,7 +304,7 @@ export default function TableGrid() {
 							sx={{
 								display: "flex",
 								flexWrap: "wrap",
-								gap: "16px",
+								gap: "1rem",
 							}}
 						>
 							{Object.keys(selectedRow).map((key) => (
@@ -350,12 +337,19 @@ export default function TableGrid() {
 						onClick={async () => {
 							if (selectedRow && editRowIndex !== null) {
 								try {
-									const response = await axios.put(
+									const response = await fetch(
 										`http://localhost:3000/organizations/${editRowIndex}`,
-										selectedRow
+										{
+											method: "PUT",
+											headers: {
+												"Content-Type": "application/json",
+											},
+											body: JSON.stringify(selectedRow),
+										}
 									);
+									const updatedRow = await response.json();
 									const updatedRows = rows.map((row) =>
-										row.id === editRowIndex ? response.data : row
+										row.id === editRowIndex ? updatedRow : row
 									);
 									setRows(updatedRows);
 									setOpen(false);
@@ -365,7 +359,7 @@ export default function TableGrid() {
 							}
 						}}
 					>
-						Update
+						{labels.update}
 					</Button>
 				</Box>
 			</StyledModal>
