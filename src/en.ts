@@ -1,5 +1,6 @@
 export const labels = {
   title: "Organization",
+  search: "search",
   editOrganization: "Edit Organization",
   orgNotFound: "Organization Not Found",
   searchPlaceholder: "Search",
@@ -13,5 +14,7 @@ export const labels = {
   actions: "Actions",
   edit: "Edit",
   delete: "Delete",
-  update: "Update"
+  update: "Update",
+  lightMode: "Light Mode",
+  darkMode: "Dark Mode"
 };

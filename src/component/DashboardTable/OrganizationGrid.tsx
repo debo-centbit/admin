@@ -18,11 +18,11 @@ import {
 	Typography,
 	styled,
 } from "@mui/material";
-import customColors from "./CustomColors"
 import React, { useEffect, useState } from "react";
+import { labels } from '../../en';
+import customColors from "./CustomColors";
 import Title from "./Title";
-import { RowData, Organization } from './interfaces/interfaces'
-import { labels } from '../../en'
+import { Organization, RowData } from './interfaces/interfaces';
 
 const StyledToolbar = styled(Toolbar)({
 	display: "flex",
@@ -155,7 +155,7 @@ export default function OrganizationGrid() {
 				<Title> {labels.title}</Title>
 				<Search>
 					<IconButton
-						aria-label="search"
+						aria-label={labels.search}
 						sx={{
 							color: customColors.ashGray,
 						}}
@@ -163,7 +163,7 @@ export default function OrganizationGrid() {
 						<SearchIcon />
 					</IconButton>
 					<InputBase
-						placeholder="Search"
+						placeholder={labels.searchPlaceholder}
 						value={searchQuery}
 						onChange={handleSearch}
 						sx={{

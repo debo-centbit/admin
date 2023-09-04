@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { useState } from "react";
 import OrganizationGrid from "./OrganizationGrid";
+import { labels } from "../../en"
 
 const lightTheme = createTheme();
 const darkTheme = createTheme({
@@ -44,7 +45,7 @@ export default function OrganizationTable() {
 							<Grid item xs={12}>
 								<ListItemButton component="a" href="#profile">
 									<ListItemIcon>
-										{mode === "light" ? <LightMode aria-label="Light Mode" data-testid="light-mode-icon" /> : <ModeNight aria-label="Dark Mode" data-testid="dark-mode-icon"/>}
+										{mode === "light" ? <LightMode aria-label={labels.lightMode} data-testid="light-mode-icon" /> : <ModeNight aria-label={labels.darkMode} data-testid="dark-mode-icon"/>}
 									</ListItemIcon>
 									<Switch
                     role="switch"
