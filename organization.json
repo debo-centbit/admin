@@ -1,0 +1,84 @@
+{
+  "organizations": [
+    {
+      "id": 0,
+      "name": "Name 1",
+      "tagline": "Tagline 1",
+      "banner": "Banner 1",
+      "organizationURL": "URL 1",
+      "borderRadius": "10px",
+      "buttonColors": "Red",
+      "authMethod": "Authentication 1"
+    },
+    {
+      "id": 1,
+      "name": "Name 2",
+      "tagline": "Tagline 2",
+      "banner": "Banner 2",
+      "organizationURL": "URL 2",
+      "borderRadius": "10px",
+      "buttonColors": "Blue",
+      "authMethod": "Authentication 2"
+    },
+    {
+      "id": 2,
+      "name": "Name 3",
+      "tagline": "Tagline 3",
+      "banner": "Banner 3",
+      "organizationURL": "URL 3",
+      "borderRadius": "10px",
+      "buttonColors": "Green",
+      "authMethod": "Authentication 3"
+    },
+    {
+      "id": 3,
+      "name": "Name 4",
+      "tagline": "Tagline 4",
+      "banner": "Banner 4",
+      "organizationURL": "URL 4",
+      "borderRadius": "10px",
+      "buttonColors": "Red",
+      "authMethod": "Authentication 4"
+    },
+    {
+      "id": 4,
+      "name": "Name 5",
+      "tagline": "Tagline 5",
+      "banner": "Banner 5",
+      "organizationURL": "URL 5",
+      "borderRadius": "10px",
+      "buttonColors": "Blue",
+      "authMethod": "Authentication 5"
+    },
+    {
+      "id": 5,
+      "name": "Name 6",
+      "tagline": "Tagline 6",
+      "banner": "Banner 6",
+      "organizationURL": "URL 6",
+      "borderRadius": "10px",
+      "buttonColors": "Green",
+      "authMethod": "Authentication 6"
+    },
+    {
+      "id": 6,
+      "name": "Name 7",
+      "tagline": "Tagline 7",
+      "banner": "Banner 7",
+      "organizationURL": "URL 7",
+      "borderRadius": "10px",
+      "buttonColors": "Red",
+      "authMethod": "Authentication 7"
+    },
+    {
+      "id": 7,
+      "name": "Name 8",
+      "tagline": "Tagline 8",
+      "banner": "Banner 8",
+      "organizationURL": "URL 8",
+      "borderRadius": "10px",
+      "buttonColors": "Blue",
+      "authMethod": "Authentication 8"
+    }
+  ]
+}
