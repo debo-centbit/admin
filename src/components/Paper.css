@@ -1,0 +1,49 @@
+.Paper-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    flex-wrap: wrap;
+    max-width: 98%;
+}
+.Paper-span {
+     color: red; 
+     font-size: 12px;
+     margin-top: 4px; 
+}
+
+.Paper-toogle {
+    display: flex; 
+    width: 98%;
+    gap: 15px;
+}
+
+
+
+.Paper-submit {
+    width: 98%; 
+    background-color: blue;
+    padding: 10px; 
+    color: white; 
+    align-items: center; 
+    border: none;
+    margin: 5px
+}
+#light {
+    background-color: #f3ebf6;
+  }
+  
+  #dark {
+    background-color: grey;
+  }
+
+  .Paper-upload-label{
+    background-color: burlywood;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    
+  }
+  
+
