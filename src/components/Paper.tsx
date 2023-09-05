@@ -374,11 +374,6 @@ const Paper = () => {
         </div>
           
     <div className="Paper-toogle">
-      <label  htmlFor="bannerUpload" className="Paper-upload-label">
-        <span style={{ color: "white", padding: "10px"}}>Upload Banner</span>
-      </label>
-        <input type="file" id="bannerUpload" accept="image" onChange={handleImage} style={{display:"none"}}  name="banner" />
-        
 
         <div className="Paper-tagline">
             <InputField
@@ -398,6 +393,13 @@ const Paper = () => {
                             </span>
                     )}
         </div>  
+
+        <div className="Paper-bannerUplaod">
+                <label  htmlFor="bannerUpload" className="Paper-upload-label">
+                    <span style={{ color: "white"}}>Upload Banner</span>
+                </label>
+          <input type="file" id="bannerUpload" accept="image" onChange={handleImage} style={{display:"none"}}  name="banner" />
+        </div>
      
      </div>
 
