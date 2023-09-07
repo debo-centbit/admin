@@ -21,7 +21,7 @@ function App() {
   });
   
   return (
-    <>
+    <div>
       <ThemeProvider theme={theme}>
         <Paper>
         <ProSidebarProvider>
@@ -39,7 +39,7 @@ function App() {
 
         </Paper>
       </ThemeProvider>
-    </>
+    </div>
   );
 }
 const styles = {

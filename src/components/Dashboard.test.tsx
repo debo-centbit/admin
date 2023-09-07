@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import Dashboard from "./Dashboard";
-import userEvent from "@testing-library/user-event"
+import userEvent from "@testing-library/user-event";
 
 test("renders organization table text", () => {
   render(<Dashboard />);
@@ -17,14 +17,9 @@ test("renders AddOrganisation component", async () => {
     expect(addOrganisationComponent).toBeInTheDocument();
   });
 });
+
 test("renders Modal component", () => {
-    render(<Dashboard />);
-    const button = screen.getByTestId("buttonClick");
+  render(<Dashboard />);
+  const button = screen.getByTestId("buttonClick");
   userEvent.click(button);
-  });
-  
-  
-  
-  
-  
-  
+});

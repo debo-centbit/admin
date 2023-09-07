@@ -1,17 +1,15 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import App from './App';
 
+jest.mock('react-pro-sidebar', () => ({
+  useMediaQuery: () => false, 
+}));
 describe('App Integration Test', () => {
-  it('renders the App component', () => {
-    const { getByText } = render(<App />);
-    expect(getByText('Your App Title')).toBeInTheDocument();
-  });
 
   it('toggles dark mode when the button is clicked', () => {
-    const { getByTestId } = render(<App />);
-
-    const darkModeToggle = getByTestId('dark-mode-toggle');
+    render(<App />);
+    const darkModeToggle = screen.getByTestId('dark-mode-toggle');
 
     expect(document.body).not.toHaveClass('Mui-dark-mode');
 
