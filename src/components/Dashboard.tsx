@@ -10,8 +10,8 @@ const Dashboard = () => {
     <Box>
       <Typography>ORGANIZATION TABLE</Typography>
       <Box>
-        <AddOrganisation data-testid="add-organisation" />
-        <Modal data-testid="modal"/>
+        <AddOrganisation  />
+        <Modal />
       </Box>
     </Box>
 
