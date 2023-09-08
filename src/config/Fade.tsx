@@ -9,6 +9,7 @@ interface FadeProps {
   onExited?: (node: HTMLElement, isAppearing: boolean) => void;
   ownerState?: any;
 }
+
 const Fade = React.forwardRef<HTMLDivElement, FadeProps>(function Fade(
   props,
   ref
@@ -22,6 +23,7 @@ const Fade = React.forwardRef<HTMLDivElement, FadeProps>(function Fade(
     ownerState,
     ...other
   } = props;
+
   const style = useSpring({
     from: { opacity: 0 },
     to: { opacity: open ? 1 : 0 },
